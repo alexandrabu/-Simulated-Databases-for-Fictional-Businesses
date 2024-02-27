@@ -1,0 +1,179 @@
+CREATE TABLE Angajati_c (
+id_angajat NUMBER(10) CONSTRAINT pk_angajati_c PRIMARY KEY,
+nume VARCHAR2(100),
+prenume VARCHAR2(100),
+data_angajare DATE
+);
+CREATE TABLE Clienti_c (
+id_client NUMBER(10) CONSTRAINT pk_clienti_c PRIMARY KEY,
+nume VARCHAR2(100) NOT NULL,
+prenume VARCHAR2(100) NOT NULL
+);
+CREATE TABLE Servicii_c (
+id_serviciu NUMBER(10) CONSTRAINT pk_servicii_c PRIMARY KEY,
+nume_serviciu VARCHAR2(255),
+pret NUMBER(10,2) NOT NULL
+);
+CREATE TABLE Comenzi_c (
+id_comanda NUMBER(10) CONSTRAINT pk_comenzi_c PRIMARY KEY,
+stare_comanda NUMBER(2),
+id_angajat NUMBER(10),
+id_client NUMBER(10),
+id_serviciu NUMBER(10),
+data_plasare DATE,
+CONSTRAINT FK_Angajati_Comenzi FOREIGN KEY (id_angajat)
+REFERENCES Angajati_c(id_angajat),
+CONSTRAINT FK_Clienti_Comenzi FOREIGN KEY (id_client)
+REFERENCES Clienti_c(id_client),
+CONSTRAINT FK_Servicii_Comenzi FOREIGN KEY (id_serviciu)
+REFERENCES Servicii_c(id_serviciu)
+);
+CREATE TABLE AngajatiServicii (
+id_angajat NUMBER(10),
+id_serviciu NUMBER(10),
+PRIMARY KEY (id_angajat, id_serviciu),
+CONSTRAINT FK_AngajatiServicii_Angajati FOREIGN KEY (id_angajat)
+REFERENCES Angajati_c(id_angajat),
+CONSTRAINT FK_AngajatiServicii_Servicii FOREIGN KEY (id_serviciu)
+REFERENCES Servicii_c(id_serviciu)
+);
+
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (1, 'Ayala', 'Matilda', TO_DATE('2028-01-01', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (2, 'Alexander', 'Jayson', TO_DATE('2018-03-15', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (3, 'Sharp', 'Celine', TO_DATE('2019-07-10', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (4, 'Grimes', 'Olive', TO_DATE('2019-11-22', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (5, 'Lopez', 'Felicity', TO_DATE('2019-05-03', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (6, 'Mullins', 'Muhammed', TO_DATE('2017-09-18',
+'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (7, 'Chen', 'Jed', TO_DATE('2022-02-27', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (8, 'Baird', 'Fatima', TO_DATE('2022-06-08', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (9, 'Carter', 'Dean', TO_DATE('2021-10-12', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (10, 'Hudson', 'Stanley', TO_DATE('2023-04-25', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (11, 'Leon', 'Aurora', TO_DATE('2023-08-30', 'YYYY-MM-DD'));
+INSERT INTO Angajati_c (id_angajat, nume, prenume, data_angajare)
+VALUES (12, 'Adkins', 'Aleeza', TO_DATE('2023-12-05', 'YYYY-MM-DD'));
+                        INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (1, 'Denzel',
+'Gutierrez');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (2, 'Yousuf',
+'Davis');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (3, 'Vivian',
+'Phillips');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (4, 'Adnan',
+'Cabrera');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (5, 'Dulcie',
+'Monroe');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (6, 'Alex',
+'Gibbons');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (7, 'Rafe',
+'Sweeney');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (8, 'Eshal',
+'Tucker');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (9, 'Ronald',
+'Davila');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (10, 'Armaan',
+'Andrade');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (11, 'Nathan',
+'Elliott');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (12, 'Owais',
+'Bond');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (13, 'Sulayman',
+'Trevino');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (14, 'Jessica',
+'Hoover');
+INSERT INTO Clienti_c (id_client, nume, prenume) VALUES (15, 'Callan',
+'Bray');
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (1,
+'Confecționare haine personalizate', 473);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (2,
+'Ajustare mărime haine', 208);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (3,
+'Adăugare broderii sau decorațiuni', 395);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (4,
+'Restaurare haine vechi sau deteriorate', 215);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (5,
+'Sfaturi privind stilul și moda', 333);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (6,
+'Producere uniforme pentru diverse scopuri', 445);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (7,
+'Modificări rapide pentru situații urgente', 406);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (8,
+'Sfaturi pentru alegerea țesăturilor potrivite', 821);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (9,
+'Reparații fermoare, nasturi', 792);
+INSERT INTO Servicii_c (id_serviciu, nume_serviciu, pret) VALUES (10,
+'Recomandări pentru materiale și culori', 157);
+                                                      BEGIN
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (12, 0, 2, 12, 3,
+TO_DATE('2021-05-25', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (13, 1, 2, 10, 3,
+TO_DATE('2022-11-10', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (14, 0, 8, 14, 7,
+TO_DATE('2020-07-22', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (15, 1, 9, 15, 9,
+TO_DATE('2021-04-05', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (16, 0, 10, 6, 2,
+TO_DATE('2023-02-18', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (17, 1, 11, 11, 4,
+TO_DATE('2022-06-27', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (18, 0, 2, 10, 6,
+TO_DATE('2021-10-08', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (19, 1, 9, 12, 6 ,
+TO_DATE('2023-04-15', 'YYYY-MM-DD'));
+INSERT INTO Comenzi_c (id_comanda_c, stare_comanda, id_angajat_c,
+id_client_c, id_serviciu_c, data_plasare) VALUES (20, 0, 10, 3, 9,
+TO_DATE('2022-12-01', 'YYYY-MM-DD'));
+END;
+INSERT INTO AngajatiServicii (id_angajat_c, id_serviciu_c)
+SELECT DISTINCT c.id_angajat_c, c.id_serviciu_c
+FROM Comenzi_c c;
+
+/* Pentru a exemplifica interogari utilizand structuri ierarhice, vom imparti
+angajatii in departamente, iar pentru fiecare departament vom numi un
+manager. */
+
+ALTER TABLE Angajati_c
+ADD id_departament_c VARCHAR2(100);
+ADD id_manager_c NUMBER(10);
+BEGIN
+UPDATE Angajati_c SET id_departament_c = 1 WHERE id_angajat_c IN (1, 2,
+3, 4);
+UPDATE Angajati_c SET id_departament_c = 2 WHERE id_angajat_c IN (5, 6,
+7, 8);
+UPDATE Angajati_c SET id_departament_c = 3 WHERE id_angajat_c IN (9,
+10, 11, 12);
+END;
+-- Actualizează valorile pentru coloana id_manager
+UPDATE Angajati_c SET id_manager_c = 1 WHERE id_angajat_c IN (1,2, 3,
+4);
+UPDATE Angajati_c SET id_manager_c = 3 WHERE id_angajat_c IN (5, 6, 7,
+8);
+UPDATE Angajati_c SET id_manager_c = 4 WHERE id_angajat_c IN (9, 10,
+11, 12);
+
+CREATE TABLE Departamente_c (
+id_departament_c NUMBER(10) CONSTRAINT pk_departamente_c
+PRIMARY KEY,
+nume_departament VARCHAR2(100),
+id_manager_c NUMBER(10),
+CONSTRAINT FK_Departamente_Manager FOREIGN KEY (id_manager_c)
+REFERENCES Angajati_c(id_angajat_c)
+);
