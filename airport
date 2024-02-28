@@ -1,0 +1,199 @@
+create table TIP_CLIENT
+(ID_TIP_CLIENT number(5) primary key,
+TIP_CLIENT varchar2(20)
+constraint TIP_CLIENT_CK check(TIP_CLIENT in('PERSOANA FIZICA', 'PERSOANA JURIDICA')));
+create table CLIENTI
+(ID_CLIENT number(5) primary key,
+ID_TIP_CLIENT number(5),
+CNP number(13),
+NUME varchar2(20),
+PRENUME varchar2(20),
+SEX varchar2(10),
+EMAIL varchar2(30),
+TELEFON varchar2(15),
+TARA varchar2(20),
+ORAS varchar2(20),
+ADRESA varchar2(30),
+COD_POSTAL number(6),
+constraint ID_TIP_CLIENT_FK foreign key(ID_TIP_CLIENT) references TIP_CLIENT(ID_TIP_CLIENT),
+constraint CNP_UQ unique(CNP),
+constraint NUME_nn check(NUME is not null),
+constraint SEX_CK check(SEX in('FEMININ', 'MASCULIN')));
+
+create table COMPANII
+(ID_COMPANIE number(5) primary key,
+NUME_COMPANIE varchar2(20));
+
+create table CLASA
+(ID_CLASA number(3) primary key,
+NUME_CLASA varchar2(10)
+constraint NUME_CLASA_CK check(NUME_CLASA in('ECONOMIC', 'BUSINESS')));
+
+create table AVIOANE
+(ID_AVION number(5) primary key,
+ID_COMPANIE number(5),
+MODEL varchar2(20),
+CAPACITATE number(4),
+constraint ID_COMPANIE_FK foreign key(ID_COMPANIE) references COMPANII(ID_COMPANIE));
+
+create table TARI
+(ID_TARA number(5) primary key,
+NUME_TARA varchar2(20));
+
+create table ORASE
+(ID_ORAS number(5) primary key,
+ID_TARA number(5),
+NUME_ORAS varchar2(20),
+constraint ID_TARA_FK foreign key(ID_TARA) references TARI(ID_TARA));
+ TABELA AEROPORT:
+create table AEROPORT
+(ID_AEROPORT number(5) primary key,
+ID_ORAS number(5),
+NUME_AEROPORT varchar2(50),
+constraint ID_ORAS_FK foreign key(ID_ORAS) references ORASE(ID_ORAS));
+
+create table CALATORIE
+(ID_CALATORIE number(5) primary key,
+ID_CLIENT number(5),
+ID_CLASA number(5),
+ID_COMPANIE number(5),
+ID_AVION number(5),
+ID_AEROPORT number(5),
+DATA_PLECARE date,
+ORA_PLECARE varchar2(20),
+DURATA_CALATORIE varchar2(10),
+INTARZIERE varchar2(10),
+PRET_BILET number(5),
+constraint FK_ID_CLIENT foreign key(ID_CLIENT) references CLIENTI(ID_CLIENT),
+constraint FK_ID_CLASA foreign key(ID_CLASA) references CLASA(ID_CLASA),
+constraint FK_ID_COMPANIE foreign key(ID_COMPANIE) references COMPANII(ID_COMPANIE),
+constraint FK_ID_AVION foreign key(ID_AVION) references AVIOANE(ID_AVION),
+constraint FK_ID_AEROPORT foreign key(ID_AEROPORT) references AEROPORT(ID_AEROPORT));
+
+insert into TIP_CLIENT values (101, 'PERSOANA FIZICA');
+insert into TIP_CLIENT values (102, 'PERSOANA FIZICA');
+insert into TIP_CLIENT values (103, 'PERSOANA JURIDICA');
+insert into TIP_CLIENT values (104, 'PERSOANA FIZICA');
+insert into TIP_CLIENT values (105, 'PERSOANA JURIDICA');
+insert into TIP_CLIENT values (106, 'PERSOANA JURIDICA');
+insert into TIP_CLIENT values (107, 'PERSOANA FIZICA');
+insert into TIP_CLIENT values (108, 'PERSOANA FIZICA');
+insert into TIP_CLIENT values (109, 'PERSOANA JURIDICA');
+
+insert into CLIENTI values(111,101, 2900223338845, 'Anghel', 'Alexandra','FEMININ',
+'anghel.alexandra23@gmail.com',
+'0721.234.545', 'Romania', 'Iasi', 'strada Traian, nr. 123', 634210);
+insert into CLIENTI values(112,102, 1921203735981, 'Barbu', 'Marian', 'MASCULIN',
+'barbu.marian3@yahoo.com',
+'0765.551.490', 'Romania', 'Timisoara', 'strada Aurora, nr.34', 459032);
+insert into CLIENTI values(113,103, 2780630678239, 'Dragan', 'Silviu', 'MASCULIN',
+'dragan.silviu78@hotmail.com',
+'0758.933.990', 'Romania', 'Brasov', 'strada Decebal, nr. 14', 736839);
+insert into CLIENTI values(114,104, 2801020375912, 'Marinescu', 'Oana',
+'FEMININ','marinescu.oana20@yahoo.com',
+'0767.873,890', 'Romania', 'Constanta', 'strada Herta, nr. 10', 627267);
+insert into CLIENTI values(115,105, 1890225764329, 'Grigore', 'Florin', 'MASCULIN',
+'grigore.florin98@yahoo.com',
+'0766.552.611', 'Romania', 'Urziceni', 'strada Teilor, nr. 7', 952300);
+insert into CLIENTI values(116,106, 2690412754387, 'Neagu', 'Diana',
+'FEMININ','neagu.diana44@hotmail.com',
+'0735.856.890', 'Romania', 'Bucuresti', 'strada C-tin Brancusi, nr. 24', 573907);
+insert into CLIENTI values(117,107, 2920511657493, 'Nedelcu', 'Elena',
+'FEMININ','elena.nedelcu11@yahoo.com',
+'0775.121.829', 'Romania', 'Bucuresti', 'strada Codlea, nr. 91',383647);
+insert into CLIENTI values(118,108, 1901221876543, 'Stanciu', 'Vlad', 'MASCULIN',
+'vlad.stanciu21@gmail.com',
+'0747.985.214', 'Romania', 'Craiova', 'strada Cobalcescu, nr. 23',847658);
+insert into CLIENTI values(119,109, 2891101420061, 'Safta', 'Madalina',
+'FEMININ','mada.safta@hotmail.com',
+'0775.697.039', 'Romania', 'Vaslui', 'strada Lalelelor, nr. 20',746589);
+insert into CLIENTI values(120,110, 1600616758264, 'Radu', 'Sorin', 'MASCULIN', 'radu_sorin@gmail.ro',
+'0766.875.967', 'Romania', 'Slobozia', 'strada Socului, nr. 86',387568);
+select * from clienti;
+
+insert into COMPANII values(211, 'Blue Air');
+insert into COMPANII values(212, 'TAROM');
+insert into COMPANII values(213, 'Al Italia');
+insert into COMPANII values(214, 'Air France');
+insert into COMPANII values(215, 'Wizz Air');
+insert into COMPANII values(216, 'Lufthansa');
+insert into COMPANII values(217, 'TAROM');
+insert into COMPANII values(218, 'KLM');
+insert into COMPANII values(219, 'American Airlines');
+insert into COMPANII values(220, 'Etihad Airways');
+
+insert into CLASA values(311, 'BUSINESS');
+insert into CLASA values(312, 'ECONOMIC');
+insert into CLASA values(313, 'BUSINESS');
+insert into CLASA values(314, 'ECONOMIC');
+insert into CLASA values(315, 'ECONOMIC');
+insert into CLASA values(316, 'BUSINESS');
+insert into CLASA values(317, 'ECONOMIC');
+insert into CLASA values(318, 'ECONOMIC');
+insert into CLASA values(319, 'BUSINESS');
+insert into CLASA values(320, 'ECONOMIC');
+
+insert into AVIOANE values(411, 211, 'Boeing 737-300', 286);
+insert into AVIOANE values(412, 212, 'Airbus 310-325', 195);
+insert into AVIOANE values(413, 213, 'Boeing 737-800', 210);
+insert into AVIOANE values(414, 214, 'Airbus A318100', 234);
+insert into AVIOANE values(415, 215, 'ATR 42-500', 89);
+insert into AVIOANE values(416, 216, 'Boeing 777-200', 305);
+insert into AVIOANE values(417, 217, 'Airbus A380', 800);
+insert into AVIOANE values(418, 218, 'Douglas DC-9', 90);
+insert into AVIOANE values(419, 219, 'Boeing 707', 140);
+insert into AVIOANE values(420, 220, 'Boeing 787', 300);
+
+insert into TARI values(511, 'Spania');
+insert into TARI values(512, 'Germania');
+insert into TARI values(513, 'Italia');
+insert into TARI values(514, 'Franta');
+insert into TARI values(515, 'Canada');
+insert into TARI values(516, 'Grecia');
+insert into TARI values(517, 'Belgia');
+insert into TARI values(518, 'Rusia');
+insert into TARI values(519, 'Turcia');
+insert into TARI values(520, 'SUA');
+
+insert into ORASE values(611, 511, 'Madrid');
+insert into ORASE values(612, 512, 'Berlin');
+insert into ORASE values(613, 513, 'Roma');
+insert into ORASE values(614, 514, 'Paris');
+insert into ORASE values(615, 515, 'Montréal');
+insert into ORASE values(616, 516, 'Atena');
+insert into ORASE values(617, 517, 'Bruxelles');
+insert into ORASE values(618, 518, 'Moscova');
+insert into ORASE values(619, 519, 'Ankara');
+insert into ORASE values(620, 520, 'Los Angeles');
+
+insert into AEROPORT values(711, 611, 'Adolfo Suárez');
+insert into AEROPORT values(712, 612, 'Berlin Tegel');
+insert into AEROPORT values(713, 613, 'Leonardo da Vinci');
+insert into AEROPORT values(714, 614, 'Charles de Gaulle');
+insert into AEROPORT values(715, 615, 'Pierre Elliott Trudeau');
+insert into AEROPORT values(716, 616, 'Athens International Airport');
+insert into AEROPORT values(717, 617, 'Brussels Airport');
+insert into AEROPORT values(718, 618, 'Sheremetyevo');
+insert into AEROPORT values(719, 619, 'Esenboga');
+insert into AEROPORT values(720, 620, 'LAX');
+
+insert into CALATORIE values(801, 111, 311, 211, 411, 711, to_date('02.02.2017','dd.mm.yyyy'), '17:50','3
+ore', '15 minute', 450);
+insert into CALATORIE values(802, 112, 312, 212, 412, 712, to_date('10.03.2017','dd.mm.yyyy'), '11:00',
+'2 ore', 'fara', 400);
+insert into CALATORIE values(803, 113, 313, 213, 413, 713, to_date('27.05.2017','dd.mm.yyyy'), '16:30',
+'2 ore','10 minute', 289);
+insert into CALATORIE values(804, 114, 314, 214, 414, 714, to_date('14.12.2017','dd.mm.yyyy'), '12:00',
+'3 ore', '20 minute', 349);
+insert into CALATORIE values(805, 115, 315, 215, 415, 715, to_date('15.08.2017','dd.mm.yyyy'), '06:00',
+'12 ore', 'fara', 129);
+insert into CALATORIE values(806, 116, 316, 216, 416, 716, to_date('23.02.2017','dd.mm.yyyy'), '08:00',
+'2 ore', '5 minute', 500);
+insert into CALATORIE values(807, 117, 317, 217, 417, 717, to_date('04.06.2017','dd.mm.yyyy'), '10:00',
+'1 ora', '10 minute', 220);
+insert into CALATORIE values(808, 118, 318, 218, 418, 718, to_date('15.09.2017','dd.mm.yyyy'), '20:00',
+'4 ore', 'fara', 500);
+insert into CALATORIE values(809, 119, 319, 219, 419, 719, to_date('24.10.2017','dd.mm.yyyy'), '13:20',
+'4 ore', '10 minute', 499);
+insert into CALATORIE values(810, 120, 320, 220, 420, 720, to_date('22.11.2017','dd.mm.yyyy'), '04;40',
+'16 ore', '5 minute', 370);
