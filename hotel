@@ -1,0 +1,259 @@
+CREATE TABLE Rezervare
+( cod_rezervare VARCHAR2(8) NOT NULL,
+data_rezervare DATE);
+ALTER TABLE Rezervare
+ADD CONSTRAINT cod_rezervare_pk primary key (cod_rezervare); 
+CREATE TABLE Destinatie
+( cod_destinatie VARCHAR2(25) NOT NULL,
+data_destinatie VARCHAR(20) NOT NULL,
+den_destinatie CHAR(30));
+ALTER TABLE Destinatie
+ADD CONSTRAINT cod_destinatie_pk primary key (cod_destinatie);
+CREATE TABLE Restaurant
+( cod_masa VARCHAR2(15) NOT NULL,
+nrscaune_masa VARCHAR2(5) NOT NULL,
+denumire_masa VARCHAR2(25));
+ALTER TABLE Restaurant
+ADD CONSTRAINT cod_masa_pk primary key (cod_masa); 
+CREATE TABLE Client
+( cod_client VARCHAR2(25) NOT NULL,
+nume_client VARCHAR2(25),
+prenume_client VARCHAR2(25),
+cod_destinatie VARCHAR2(25),
+tel_client VARCHAR2(20),
+email_client VARCHAR2(35));
+ALTER TABLE Client
+ADD CONSTRAINT cod_client_pk primary key (cod_client);
+ALTER TABLE Client
+ADD CONSTRAINT client_destinatie_cod_fk foreign key (cod_destinatie)
+REFERENCES Destinatie (cod_destinatie);
+ALTER TABLE Client
+ADD CONSTRAINT client_email_UK unique (email_client); 
+CREATE TABLE Cazare
+( cod_cazare VARCHAR2(15) NOT NULL,
+cod_destinatie VARCHAR2(25),
+cod_masa VARCHAR2(15),
+etaj_cazare VARCHAR2(10) NOT NULL,
+nrcamera_cazare VARCHAR2(5) NOT NULL,
+CONSTRAINT Cazare_C_cod_pk primary key (cod_cazare));
+ALTER TABLE Cazare
+ADD CONSTRAINT cazare_destinatie_cod_fk foreign key (cod_destinatie)
+REFERENCES Destinatie (cod_destinatie);
+ALTER TABLE Cazare
+ADD CONSTRAINT cazare_masa_cod_fk foreign key (cod_masa)
+REFERENCES Restaurant (cod_masa); 
+CREATE TABLE Plata
+( cod_plata VARCHAR2(20) NOT NULL,
+cod_client VARCHAR2(25),
+avans NUMBER(25),
+data_avans DATE,
+tip_plata VARCHAR2(35),
+rest_plata NUMBER(20),
+CONSTRAINT plata_C_cod_pk primary key (cod_plata));
+ALTER TABLE Plata
+ADD CONSTRAINT plata_client_cod_fk foreign key (cod_client)
+REFERENCES Clienti1 (cod_client);
+CREATE TABLE Hotel
+( cod_hotel VARCHAR2(20) NOT NULL,
+den_hotel VARCHAR2(40),
+adresa_hotel VARCHAR2(40),
+tel_hotel VARCHAR2(20),
+categorie VARCHAR2(35),
+cod_cazare VARCHAR2(25),
+cod_rezervare VARCHAR2(8),
+cod_masa VARCHAR2(15),
+CONSTRAINT hotel_C_cod_pk primary key (cod_hotel));
+ALTER TABLE Hotel
+ADD CONSTRAINT hotel_cazare_cod_fk foreign key (cod_cazare)
+REFERENCES Cazare (cod_cazare);
+ALTER TABLE Hotel
+ADD CONSTRAINT hotel_rezervare_cod_fk foreign key (cod_rezervare)
+REFERENCES Rezervare (cod_rezervare);
+ALTER TABLE Hotel
+ADD CONSTRAINT hotel_masa_cod_fk foreign key (cod_masa)
+REFERENCES Restaurant (cod_masa);
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ101', to_date('17-06-2022', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ102', to_date('18-05-2019', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ103', to_date('25-06-2018', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ104', to_date('09-08-2018', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ105', to_date('26-02-2019', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ106', to_date('30-05-2019', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ107', to_date('01-07-2022', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ108', to_date('07-03-2021', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ109', to_date('05-11-2021', 'dd-mm-yyyy'));
+INSERT INTO Rezervare (cod_rezervare, data_rezervare)
+VALUES ('REZ110', to_date('11-12-2022', 'dd-mm-yyyy'));
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('1C', 'Constanţa', '02-07-2021');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('2B', 'Bacau', '18-10-2019');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('3C', 'Cluj', '11-03-2019');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('4B', 'Bucureşti', '28-10-2022');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('5I', 'Iaşi', '08-03-2018');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('6O', 'Oradea', '24-12-2020');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('7B', 'Braşov', '18-08-2022');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('8T', 'Timisoara', '03-01-2023');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('9D', 'Deva', '16-07-2021');
+INSERT INTO Destinatie (cod_destinatie, den_destinatie, data_destinatie)
+VALUES ('10S', 'Sibiu', '31-12-2021');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('1', 'Room Only', '0', '150');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('2', 'Mic Dejun', '4', '230');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('3', 'Demipensiune', '8', '370');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('4', 'Pensiune Completa', '6', '560');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('5', 'All-Inclusive', '4', '210');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('6', 'Ultra-All-Inclusive', '4', '790');
+INSERT INTO Restaurant (cod_masa, denumire_masa, nrscaune_masa, pret_masa)
+VALUES ('7', 'All-Inclusive-light', '2', '425'); 
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1001', 'Popa', 'George', '1C', '0754336367', 'popa.george@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1002', 'Stoica', 'Alexandru', '2B', '0728217234',
+'stoica.alexandru@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1003', 'Matei', 'Denisa', '3C', '0722563420',
+'matei.denisa@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1004', 'Magiru', 'Mara', '4B', '0745271100', 'magiru.mara@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1005', 'Grigore', 'Alexandra', '5I', '0720183644',
+'grigore.alexandra@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1006', 'Neacsu', 'Andrei', '6O', '0736225657',
+'neacsu.andrei@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1007', 'Marcu', 'Leonard', '7B','0721280976',
+'marcu.leonardr@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1008', 'Lupu', 'Simina', '8T', '0742362020',
+'lupu.simina@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1009', 'Gurgu', 'Anca', '9D', '0751727480',
+'gurgu.anca@yahoo.com');
+INSERT INTO Clienti1 (cod_client, nume_client, prenume_client, cod_destinatie,
+tel_client, email_client)
+VALUES ('COD1010', 'Ciurel', 'Florin', '10S', '0764326740',
+'ciurel.florin@yahoo.com'); 
+
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1001', '1C', '1', '4', '456');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1002', '2B', '2', '2', '233');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1003', '3C', '3', '1', '110');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1004', '4B', '4', '5', '509');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1005', '5I', '6', '3', '321');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1006', '6O', '7', '1', '104');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1007', '7B', '5', '4', '411');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1008', '8T', '2', '2', '220');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1009', '9D', '1', '5', '515');
+INSERT INTO Cazare (cod_cazare, cod_destinatie, cod_masa, etaj_cazare, nrcamera_cazare)
+VALUES ('1010', '10S', '3', '3', '307'); 
+
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA101', 'COD1001', '2000', to_date('21-05-2019', 'dd-mm-yyyy'), 'plata banca
+depunere', '0');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA102', 'COD1002', '3500', to_date('27-06-2018', 'dd-mm-yyyy'), 'plata via
+card', '1500');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA103', 'COD1003', '6500', to_date('13-08-2018', 'dd-mm-yyyy'), 'plata
+vouchere vacanta', '1200');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA104', 'COD1004', '3500', to_date('28-02-2019', 'dd-mm-yyyy'), 'plata cash
+posta', '0');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA105', 'COD1005', '3750', to_date('02-06-2019', 'dd-mm-yyyy'), 'plata banca
+depunere', '1000');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA106', 'COD1006', '1850', to_date('09-07-2022', 'dd-mm-yyyy'), 'plata via
+card', '0');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA107', 'COD1007', '1550', to_date('11-03-2021', 'dd-mm-yyyy'), 'plata cash
+posta', '850');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA108', 'COD1008', '1850', to_date('10-11-2021', 'dd-mm-yyyy'), 'plata banca
+depunere', '0');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA109', 'COD1009', '4500', to_date('15-12-2022', 'dd-mm-yyyy'), 'plata via
+card', '2450');
+INSERT INTO Plata (cod_plata, cod_client, avans, data_avans, tip_plata, rest_plata)
+VALUES ('PLATA110', 'COD1010', '2500', to_date('20-06-2022', 'dd-mm-yyyy'), 'plata via
+card', '1450'); 
+
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL01', 'Grand Hotel', 'str. Vlasiei nr. 25, Constanta', '0773908912', 'Trei Stele',
+'1002', 'REZ102', '2');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL02', 'Hotel Meduza', 'str. Evlaviei nr. 2 Bacau', '0769619644', 'Patru Stele',
+'1003', 'REZ103', '3');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL03', 'Hotel Crystal Palace', 'str. Revolutiei nr. 157, Cluj', '0374187880', 'Cinci
+Stele', '1004', 'REZ104', '4');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL04', 'Hotel Asos', 'Bd. Nicolae Balcescu nr. 16, Sector 1', '0757641292',
+'Patru Stele', '1005', 'REZ105', '6');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL05', 'Hotel Olimp', 'Str. Eroilor nr. 56, Iasi', '0751197476', 'Patru Stele',
+'1006', 'REZ106', '7');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL06', 'Hotel Felix', 'str. Nicolae Iorga nr. 14, Oradea', '0727870442', 'Patru
+Stele', '1007', 'REZ107', '5');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL07', 'Hotel Ambasador', 'str. Sperantei nr. 192, Brasov', '0757049135', 'Trei
+Stele', '1008', 'REZ108', '2');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL08', 'Hotel Mozaik', 'Bd. Independentei nr. 92, Timisoara', '0720195323',
+'Cinci Stele', '1009', 'REZ109', '1');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL09', 'West Hotel ', 'str. Libertatii nr. 22, Deva', '0740596313', 'Patru Stele',
+'1010', 'REZ110', '3');
+INSERT INTO Hotel (cod_hotel, den_hotel, adresa_hotel, tel_hotel, categorie, cod_cazare,
+cod_rezervare, cod_masa)
+VALUES ('HOTEL10', 'Hotel Anubis', 'str. Carpati nr. 214, Sibiu', '0754362021', 'Doua Stele',
+'1001', 'REZ101', '1');
